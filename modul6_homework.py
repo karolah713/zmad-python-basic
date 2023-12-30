@@ -13,7 +13,7 @@ Wczytaj plik zamowienia.csv i dokonaj w nim kilku przekształceń:
 - Podziel plik na dwie części i zapisz je tak, aby dane dla każdego kraju (Polska, Niemcy) znajdowały się w oddzielnych plikach o nazwach 
 zamowienia_polska.csv i zamowienia_niemcy.csv.
 '''
-#MODUŁ 6, ZADANIE 1
+
 def cleanUp_orders():
     dataSource = 'zamowienia.csv'
     dataTarget_Poland = 'zamowienia_polska.csv'
@@ -55,6 +55,35 @@ def cleanUp_orders2():
     order_data[order_data.Kraj == 'Polska'].to_csv('zamowienia_polska2.csv', index=False)
     order_data[order_data.Kraj == 'Niemcy'].to_csv('zamowienia_niemcy2.csv', index=False)
 
-cleanUp_orders2()
+#cleanUp_orders2()
+
+###############################################################################################################################
+
+#ZADANIE 2
+def create_bulk_file(bulkFileName, *args):
+    col = ['Kraj', 'Sprzedawca', 'Data zamowienia', 'idZamowienia', 'Utarg']
+    with open(bulkFileName, 'w', newline='') as target:
+        writer = csv.DictWriter(target, delimiter=';', fieldnames=col)
+        writer.writeheader()
+        for arg in args:
+            with open(arg) as source:
+                reader = csv.DictReader(source, delimiter=";", quotechar='"')
+                for row in reader:
+                    writer.writerow(row)
+
+#create_bulk_file('zamowienia_all.csv','zamowienia_polska.csv','zamowienia_niemcy.csv')
+
+#VERSION 2 (using pandas)
+                                 
+def create_bulk_file2(bulkFileName, *args):
+    df = pd.DataFrame(args)
+
+    files_list = df[0].values.tolist()
+
+    concatenated_list = (pd.read_csv(f) for f in files_list)
+    concatenated_df = pd.concat(concatenated_list, ignore_index=True)
+    concatenated_df.to_csv(bulkFileName, index=False)
+
+create_bulk_file2('zamowienia_all2.csv','zamowienia_polska2.csv','zamowienia_niemcy2.csv')
 
 ###############################################################################################################################
