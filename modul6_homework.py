@@ -130,3 +130,94 @@ def create_type_dict(list):
 #print(create_type_dict(mieszana))
 
 ###############################################################################################################################
+
+#ZADANIE 5
+'''Napisz funkcję:
+-parametr wejściowy to lista stringów z nazwiskami
+-funkcja zapisuje do dwóch oddzielnych plików o nazwach ‘A-M_nazwiska.txt’ oraz ‘N-Ż_nazwiska.txt’ 
+odpowiednie nazwiska z podanej listy'''
+
+def sort_names(name_list):
+    a_m_names = 'A-M_nazwiska.txt'
+    n_ż_names = 'N-Ż_nazwiska.txt'
+
+    with open(a_m_names, 'w', encoding='utf-8') as target_a_n, open(n_ż_names, 'w', encoding='utf-8') as target_n_ż:
+        for item in last_names:
+            if item[0].lower() in 'aąbcćdeęfghijklłm':
+                target_a_n.write(item)
+                target_a_n.write('\n')
+            if item[0].lower() in 'noóprsśtuvwxyzźż':
+                target_n_ż.write(item)
+                target_n_ż.write('\n')
+
+last_names = ['Adamczyk', 'Cyd', 'Folk', 'Kowalski','Nalewak', 'Wrona', 'Zorro']
+#sort_names(last_names)
+
+###############################################################################################################################
+
+#ZADANIE 6
+'''Napisz funkcję, która wyświetla podany tekst odwracając kolejność liter w wyrazach. 
+Np. „Ala ma kota” wyświetli „alA am atok”'''
+
+def reversed_words(text):
+    text_reversed = ''
+    l = (text.split(' '))
+    for item in l:
+        item_rversed = item[::-1]
+        text_reversed += (item_rversed+' ')
+    return text_reversed
+
+text = 'Ala ma kota'
+#print(reversed_words(text))
+
+###############################################################################################################################
+
+#ZADANIE 7
+'''Napisz funkcję, która:
+-jako parametr wejściowy pobiera zdanie wpisywane z klawiatury,
+-ponownie z klawiatury pobiera nazwę pliku, w którym zapisany zostanie wynik działania funkcji,
+-do pliku zapisywane są unikalne wyrazy ze zdania pisane małymi literami po jednym w linii,
+-ze zdania zostaną usunięte ewentualne przecinki i kropki.'''
+
+def exc7(sentence):
+    input_file_name = input('Please provide the file name: ')
+    file_name = input_file_name + '.csv'
+    print(file_name)
+    l = (sentence.split(' '))
+    print(l)
+
+    with open(file_name, 'w', encoding='utf-8') as target:
+        for elem in l:
+            target.write(elem)
+            target.write('\n')
+
+#sentence = input('Please provide a sentence: \n').replace(',','').replace('.','').replace(';','')
+#exc7(sentence)
+            
+###############################################################################################################################
+
+#ZADANIE 8
+'''Napisz funkcję, która losuje 5 liczb całkowitych z przedziału <1, 20> dopóki w jednym 
+losowaniu nie wystąpi 1 i 20. Wyświetl ilość wykonanych losowań po spełnieniu warunku.'''
+
+def number_finder():
+    is_on = True
+    n = 1
+    numbers = []
+    while is_on:
+        for draw in range (5):
+            num = random.randint(1,20)
+            numbers.append(num)
+        if 1 in numbers and 20 in numbers:
+            is_on = False
+        else:
+            numbers = []
+            n += 1
+    return n
+
+print(number_finder()) 
+           
+###############################################################################################################################
+            
+###############################################################################################################################
+            
