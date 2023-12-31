@@ -303,3 +303,59 @@ def excercise_11():
 #excercise_11()
 
 ###############################################################################################################################
+
+#ZADANIE 12
+'''Przygotuj plik z kilkoma hasłami, które nadają się do gry 'Koło fortuny'. 
+Wczytaj te hasła do listy i losuj jedno z nich. Na ekranie wyświetlaj hasło bez ujawniania 
+poszczególnych liter, np.:___ _____ ___ __ _______ dla hasła 'Bez pracy nie ma kołaczy'. 
+Nastepnie w pętli pozwalaj uzytkownikowi na podawanie jednej litery, która będzie podstawiana 
+w miejscach gdzie występuje lub wyświetlaj komunikat, że takiej litery nie ma w haśle. 
+Dodaj też funkcjonalność, która pozwala na odgadnięcie (wpisanie) całego hasła.'''
+
+LETTERS = 'AĄBCĆDEĘFGHIJKLŁMNŃOÓPRSŚTUVWXYZŹŻ'
+def wheel_of_fortune():
+    source_file = 'wheel_of_fortune.txt'
+    quotes = []
+    guessed = []
+    with open(source_file, 'r', encoding='utf-8') as f:
+        for line in f:
+            quotes.append(line.strip())
+
+    is_on = True
+    quote_to_guess = random.choice(quotes)
+    hashed_quote = (''.join('_' if c in LETTERS else c for c in quote_to_guess))
+    print('Category: Quote')
+    print(quote_to_guess)
+    print(hashed_quote)
+    while is_on:
+        user_decision = input('Do you know this quote and want to guess? Type Y if YES, or N if you want to guess/uncover a letter: ').upper()
+
+        if user_decision == 'N':
+            user_guess = input('Please enter a letter: ').upper()
+
+            if user_guess in quote_to_guess:
+                guessed.append(user_guess)
+                print(guessed)
+            else:
+                print('This letter does not appear in the quote! Try again!!')
+            quote_after_user_guess = (''.join(c if c in guessed else '_' if c in LETTERS else c for c in quote_to_guess))
+            print(quote_after_user_guess)
+            if '_' not in quote_after_user_guess:
+                print('Congratulation. You guessed correctly. Game Over!!!')
+                is_on = False
+
+        elif user_decision == 'Y':
+            user_guess = input('Please enter the write answer: ').upper()
+            if user_guess == quote_to_guess:
+                print(user_guess)
+                print('Success. You guessed correctly. Game Over!!')
+                is_on = False
+            else:
+                print('Your answer is not correct! Try again!!')
+        else:
+            print(f'The value you have provided: {user_decision}, is not allowed. The only allowed values are Y or N. Try again!')
+
+#wheel_of_fortune()
+
+###############################################################################################################################
+
