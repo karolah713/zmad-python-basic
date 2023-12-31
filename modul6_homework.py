@@ -239,7 +239,67 @@ def lotery():
             lotery_names.remove(name_drawn)
             target.write(f'{name_drawn}, {award}\n')
 
-lotery()
+#lotery()
 
 ###############################################################################################################################
             
+#ZADANIE 10
+'''Napisz funkcję, która:
+-„rozdaje” karty z talii 52 kart (np. As pik, Dama karo, itd.) dla 4 graczy
+-karty rozdawane są bez powtórzeń po 5 dla każdego gracza
+-wyświetlana jest informacja jak wygląda „ręka” każdego z graczy, np. Alan [As pik, 9 karo, itd.]'''
+
+def card_drawing():
+    cards_colors = ['karo', 'trefl','pik','kier']
+    cards_figures = ['As', 'Dama', 'Król', 'Walet', '10','9','8','7','6','5','4','3','2']
+    cards_combination = []
+    player_cards = {'Alan': [], 'Kriss': [], 'David': [], 'Ben': []}
+    n=0
+    for card in cards_colors:
+        for fig in cards_figures:
+            combo = f'{fig} {card}'
+            cards_combination.append(combo)
+    while n<5:
+        for player in player_cards.keys():
+            card = random.choice(cards_combination)
+            cards_combination.remove(card)
+            player_cards[player].append(card)
+        n+=1
+    for elem in player_cards:
+        print(f'{elem} {player_cards[elem]}')
+
+#card_drawing()
+
+###############################################################################################################################
+
+#ZADANIE 11
+'''Napisz funkcję, która wczytuje z pliku zawierającego imiona i nazwiska osób zapisane 
+po jednym w linii, np.
+Marek Markowski
+Paweł Budzikowski
+Funkcja generuje dla podanej listy adresy e-mail postaci: imie.nazwisko@imgw.pl i zapisuje 
+dane do nowego pliku dopisując przy wcześniejszym nazwisku wygenerowany adres, np.
+Marek Markowski, marek.markowski@imgw.pl itd.
+W nazwach e-mail powinny być zastępowane ewentualne polskie znaki (ż,ź na z, ą na a itd.).''' 
+
+def excercise_11():
+    people = []
+    source_file = 'people_names.txt'
+    target_file = 'people_names_emails.txt'
+    with open(source_file, 'r', encoding='utf-8') as f:
+        for name in f:
+            people.append(name.strip())
+
+    with open(target_file, 'w', encoding='utf-8') as target:
+        for person in people:
+            #new_person = person.replace('ą', 'a').replace('ć','c').replace('ę', 'e').replace('ł', 'l')
+            #new_person= ''.join(['a' if char == 'ą' else 'c' if char == 'ć' else 'e' if char == 'ę' else 'l' if char == 'ł' else char for char in test_str])
+            replacements = {'ą': 'a','ć': 'c','ę': 'e','ń': 'n', 'ó': 'o','ś': 's','ź': 'z','ż': 'z'}
+            replaced_chars = [replacements.get(char, char) for char in person]
+            new_person = ''.join(replaced_chars)
+            email = f'{new_person.split()[0].lower()}.{new_person.split()[1].lower()}@imgw.pl'
+            target.write(f'{person}, {email}\n')
+
+#excercise_11()
+
+###############################################################################################################################
