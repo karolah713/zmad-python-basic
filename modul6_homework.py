@@ -215,9 +215,31 @@ def number_finder():
             n += 1
     return n
 
-print(number_finder()) 
+#print(number_finder()) 
            
 ###############################################################################################################################
-            
+
+#ZADANIE 9
+
+'''Napisz funkcję, która posiada zaszytą listę 3 nagród ['samochód', '10000 PLN', 'PS 4 Pro']. 
+Przygotuj plik z 10 imionami i nazwiskami zapisanymi po 1 w wierszu. 
+Następnie funkcja wczytuje plik, losuje zwycięzcę dla każdej z trzech nagród i zapisuje wyniki 
+w pliku o nazwie zwycięzcy.txt wpis postaci: Imię nazwisko, nagroda.'''
+
+def lotery():
+    awards = ['samochód', '10000 PLN', 'PS 4 Pro']
+    target_file = 'zwyciezcy.txt'
+    lotery_names = []
+    with open('lotery_names.txt', 'r', encoding='utf-8') as f:
+        for name in f:
+            lotery_names.append(name.strip())
+    with open(target_file, 'w', encoding='utf-8') as target:
+        for award in awards:
+            name_drawn = random.choice(lotery_names)
+            lotery_names.remove(name_drawn)
+            target.write(f'{name_drawn}, {award}\n')
+
+lotery()
+
 ###############################################################################################################################
             
