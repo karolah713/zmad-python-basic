@@ -359,3 +359,38 @@ def wheel_of_fortune():
 
 ###############################################################################################################################
 
+#ZADANIE 13
+'''Napisz funkcję, która będzie pobierała dwa parametry wejściowe:
+-łańcuch znaków
+-liczbę całkowitą
+Funkcja ma skracać podany łańcuch znaków tak, żeby po dodaniu ... na końcu jego długość 
+nie była większa niż max (podany jako drugi parametr) i aby tekst nie był urwany w połowie wyrazu. 
+Funkcja zwraca skrócony tekst.'''
+
+def shortened_text():
+    input_string = input('Please provide string: ')
+    input_number = int(input('Please provide an integer: '))
+    output_string = ''
+    input_string_list = input_string.split()
+
+    if len(input_string_list) == 1:
+        if len(input_string_list[0]) <= (input_number):
+            output_string += input_string_list[0]
+            print(output_string)
+        else:
+            print("The string, that consist of a single word has more characters than provided number.")
+    else:
+        if len(input_string_list[0]) <= (input_number - 3):
+            output_string += input_string_list[0]
+            for elem in input_string_list[1:]:
+                if (len(output_string) + len(elem)) < (input_number - 3):
+                    output_string += (' ' + elem)
+                    print(output_string)
+                else:
+                    print(output_string + '...')
+                    print(f'Total length = {len(output_string) + 3}')
+                    break
+        else:
+            print('First word of the provided string is too long')
+
+#shortened_text()
