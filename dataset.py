@@ -16,7 +16,7 @@ class Dataset:
         return has_header
 
     def load_dataset(self):
-        with open(filepath, newline='') as source:
+        with open(self.datasource, newline='') as source:
             has_header = self.check_headers(source)
 
             reader = csv.reader(source)
@@ -68,6 +68,7 @@ class Dataset:
             if printIt:
                 print((key, value))
         return class_names
+        
 
     def dataset_per_class(self, decision_class):
         decision_classes = self.decision_classes(printIt=False)
@@ -92,23 +93,23 @@ class Dataset:
             writer.writerows(param)
 
 
+if __name__ == "__main__":
+    
+    filepath = 'wine_data_header.csv'
+    #filepath = 'wine_data.csv'
 
+    dataset_wine = Dataset(filepath)
 
-filepath = 'wine_data_header.csv'
-#filepath = 'wine_data.csv'
+    #print(dataset_wine.load_dataset())
+    #dataset_wine.get_dataset(10,20)
+    #dataset_wine.get_labels()
+    #print(dataset_wine.datasets_to_sets(2,2, 2))
 
-dataset_wine = Dataset(filepath)
+    dataset_wine.decision_classes()
+    #dataset_wine.dataset_per_class('3')
 
-#print(dataset_wine.load_dataset())
-#dataset_wine.get_dataset(10,20)
-dataset_wine.get_labels()
-#print(dataset_wine.datasets_to_sets(2,2, 2))
-
-#dataset_wine.decision_classes()
-#dataset_wine.dataset_per_class('3')
-
-train, test, valid = dataset_wine.datasets_to_sets(10, 10, 50)
-#dataset_wine.write_to_csv(dataset_wine.datasets_to_sets(10,15,19)[2])
-#dataset_wine.write_to_csv(train)
+    #train, test, valid = dataset_wine.datasets_to_sets(10, 10, 50)
+    #dataset_wine.write_to_csv(dataset_wine.datasets_to_sets(10,15,19)[2])
+    #dataset_wine.write_to_csv(dataset_wine.data)
 
 
